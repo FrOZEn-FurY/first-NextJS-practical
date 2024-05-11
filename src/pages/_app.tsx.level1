@@ -1,0 +1,9 @@
+import type { AppProps } from "next/app"; // A Type to get the props of the app component.
+
+export default function App({ Component, pageProps }: AppProps): JSX.Element { // Component is the current component getting rendered and pageProps is what is getting passed to the current page.
+    console.log("This is a basic app file, it gets rendered each time a component gets called, or we are in each page.")
+    return <Component {...pageProps} />
+}
+
+// Pages folder have some hidden files that we can overwrite and maintain better management on the site.
+// This is one of them.

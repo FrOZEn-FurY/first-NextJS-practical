@@ -1,0 +1,27 @@
+import App, {AppProps, AppInitialProps, AppContext} from 'next/app';
+
+// type AppOwnProps = {example: string};
+
+export default function MyApp({Component, pageProps}: AppProps) {
+  console.log('pageProps: ', pageProps);
+  return (
+    <>
+      <Component {...pageProps} />
+    </>
+  );
+}
+
+MyApp.getInitialProps = async (
+  context: AppContext
+): Promise<AppInitialProps> => {
+  // Can be combined with the AppOwnProps.
+  const ctx = await App.getInitialProps(context); // We use the real App component to use the function getInitialProps, and we make a new one for ourselves.
+  console.log(ctx);
+  return {...ctx};
+};
+
+// Each next component gets rendered two times, the first time is from server side and the second one is from the client side.
+// The function getInitialProps the we made for MyApp component is the function that gets called first and in the server side, if you take a good look you'll see
+// that ctx only got printed in the console of here (server), but page props got printed here and in the console of client side.
+// So with this function, we can initialize everything we want, and in the second call, whatever this function returns goes as the pageProps prop for the component
+// MyApp. It is notable that the function returns a promise, which actually is the context or it is better to say props.
